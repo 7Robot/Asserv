@@ -5,8 +5,7 @@
 #include "libasserv_priv.h"
 
 
-int main(int argc, char **argv)
-{
+int main(int argc, char **argv) {
     if (argc != 6) {
         fprintf(stderr, "Usage: %s speedInit speedEnd accMax speedMax decMax\n", argv[0]);
         return 1;

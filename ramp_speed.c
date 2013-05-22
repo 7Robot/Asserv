@@ -43,7 +43,7 @@ int ramp_speed(float dt,
     } else {
         ret = 1;
     }
-    
+
     *pos += *speed * dt;
 
     return ret;

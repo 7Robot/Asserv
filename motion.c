@@ -48,8 +48,7 @@ static volatile float dRotMaxDefault = DEFAULT_ROT_DEC_MAX;
 
 static void(*done)(void); // callback
 
-void motion_init(void(*_done)(void))
-{
+void motion_init(void(*_done)(void)) {
     odo_init();
     done = _done;
     asserv_init(&deltaAsserv,
@@ -63,12 +62,10 @@ void motion_init(void(*_done)(void))
     deltaState.x = 0; alphaState.x = 0;
 }
 
-void motion_step(float period, int ticsLeft, int ticsRight, int *cmdLeft, int *cmdRight)
-{
+void motion_step(float period, int ticsLeft, int ticsRight, int *cmdLeft, int *cmdRight) {
     int ret;
     float dist, rot;
     float cmdDelta, cmdAlpha;
-    static oldDist = 0, oldRot = 0;
 
     odo_step(ticsLeft, ticsRight, &dist, &rot);
 
@@ -125,8 +122,8 @@ void motion_step(float period, int ticsLeft, int ticsRight, int *cmdLeft, int *c
     cmdDelta = asserv_step(&deltaAsserv, period, deltaState);
     cmdAlpha = asserv_step(&alphaAsserv, period, alphaState);
 
-    *cmdLeft = cmdDelta - 2 * cmdAlpha;
-    *cmdRight = cmdDelta + 2 * cmdAlpha;
+    *cmdLeft = (int)(cmdDelta - 2 * cmdAlpha);
+    *cmdRight = (int)(cmdDelta + 2 * cmdAlpha);
 }
 
 void motion_dist(float dist, float v, float a) {
