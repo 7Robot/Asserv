@@ -78,7 +78,7 @@ void motion_step(float period, int ticsLeft, int ticsRight, int *cmdLeft, int *c
         case M_POS:
             ret = ramp_dist(period,
                     &(deltaOrder.x), &(deltaOrder.v), &(deltaOrder.a),
-                    deltaFinalOrder.x, deltaFinalOrder.v, vDistMax, aDistMax, 0);
+                    deltaFinalOrder.x, deltaFinalOrder.v, vDistMax, aDistMax);
             if (ret) {
                 deltaMode = M_MANUAL;
                 asserv_off(&(deltaAsserv));
@@ -96,7 +96,7 @@ void motion_step(float period, int ticsLeft, int ticsRight, int *cmdLeft, int *c
         case M_POS:
             ret = ramp_dist(period,
                     &(alphaOrder.x), &(alphaOrder.v), &(alphaOrder.a),
-                    alphaFinalOrder.x, alphaFinalOrder.v, vRotMax, aRotMax, 0);
+                    alphaFinalOrder.x, alphaFinalOrder.v, vRotMax, aRotMax);
             if (ret) {
                 alphaMode = M_MANUAL;
                 asserv_off(&(alphaAsserv));

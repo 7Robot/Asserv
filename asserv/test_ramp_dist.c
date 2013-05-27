@@ -33,9 +33,9 @@ int main(int argc, char **argv) {
     float tMax = 60;
     int ret = 0;
     while (t < tMax && ret == 0) {
-        ret = ramp_dist(dt, &pos, &speed, &acc, posEnd, speedEnd, speedMax, accMax, 0);
+        ret = ramp_dist(dt, &pos, &speed, &acc, posEnd, speedEnd, speedMax, accMax);
         t = t+dt;
-        printf("%f %f %f %f %d\n", t, pos, speed, ret);
+        printf("%f %f %f %f %d\n", t, pos, speed, acc, ret);
     }
     if (t > tMax) {
         fprintf(stderr, "Timeout\n");

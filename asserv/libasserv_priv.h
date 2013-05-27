@@ -71,8 +71,7 @@ void asserv_set_speed_mode(volatile Asserv *asserv);
 int ramp_dist(float period,
         volatile float *pos, volatile float *speed, volatile float *acc,
         float posEnd, float speedEnd,
-        float speedMax, float accMax,
-        int noExceeding);
+        float speedMax, float accMax);
 int ramp_speed(float period,
         volatile float *pos, volatile float *speed,
         float speedEnd,

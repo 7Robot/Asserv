@@ -4,19 +4,17 @@
 int ramp_dist(float dt,
         volatile float *pos, volatile float *speed, volatile float *acc,
         float posEnd, float speedEnd,
-        float speedMax, float accMax,
-        int noExceeding)
+        float speedMax, float accMax)
 {
     if (speedMax == 0 || accMax == 0) return -1;
-    if (speedMax < 0) speedMax = -speedMax;
-    if (accMax < 0) accMax = -accMax;
 
     if (speedEnd > speedMax) speedEnd = speedMax;
     else if (speedEnd < -speedMax) speedEnd = -speedMax;
 
+    if (speedMax < 0) speedMax = -speedMax;
+    if (accMax < 0) accMax = -accMax;
+
     int testPos = posEnd > *pos;
-    int testSpeed = speedEnd > *speed;
-    int atSpeed = 1;
 
     float dist = posEnd - *pos;
     if (dist < 0 && *speed > 0) {
@@ -26,7 +24,6 @@ int ramp_dist(float dt,
     } else if (dist < 0 && *speed <= 0 && speedEnd > 0) {
         if (*speed < -speedMax) {
             *acc = accMax;
-            atSpeed = -1;
         } else {
             float t1 = *speed / (-accMax);
             float d1 = - 0.5f * (-accMax) * t1 * t1 + *speed * t1;
@@ -45,11 +42,9 @@ int ramp_dist(float dt,
                 *acc = accMax;
             }
         }
-        atSpeed = -1;
     } else if (dist > 0 && *speed >= 0 && speedEnd < 0) {
         if (*speed > speedMax) {
             *acc = -accMax;
-            atSpeed = -1;
         } else {
             float t1 = *speed / accMax;
             float d1 = - 0.5f * accMax * t1 * t1 + *speed * t1;
@@ -68,11 +63,9 @@ int ramp_dist(float dt,
                 *acc = -accMax;
             }
         }
-        atSpeed = -1;
     } else if (dist < 0 && *speed <= 0 && speedEnd <= 0) {
         if (*speed < -speedMax) {
             *acc = accMax;
-            atSpeed = -1;
         } else if (*speed > speedEnd) {
             *acc = -accMax;
         } else {
@@ -94,7 +87,6 @@ int ramp_dist(float dt,
     } else if (dist > 0 && *speed >= 0 && speedEnd >= 0) {
         if (*speed > speedMax) {
             *acc = -accMax;
-            atSpeed = -1;
         } else if (*speed < speedEnd) {
             *acc = accMax;
         } else {
@@ -120,13 +112,6 @@ int ramp_dist(float dt,
     *speed += *acc * dt;
     *pos += *speed * dt;
     int atPos = testPos ^ (posEnd >= *pos);
-    if (atSpeed < 0) {
-        atSpeed = testSpeed ^ (speedEnd >= *speed);
-    }
 
-    if (noExceeding) {
-        return atPos;
-    } else {
-        return atPos && atSpeed;
-    }
+    return atPos;
 }
