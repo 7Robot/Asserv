@@ -111,7 +111,6 @@ int ramp_dist(float dt,
 
     *speed += *acc * dt;
     *pos += *speed * dt;
-    int atPos = testPos ^ (posEnd >= *pos);
 
-    return atPos;
+    return posEnd == *pos || testPos ^ (posEnd > *pos);
 }
