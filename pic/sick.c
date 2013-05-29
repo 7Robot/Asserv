@@ -23,6 +23,7 @@
 
 #include "timer.h"         /* Include timer fonctions                         */
 #include "header.h"  /* Function / Parameters  */
+#include "atp-asserv.h"
 #include <uart.h>
 #include <adc.h>
 
@@ -39,7 +40,7 @@ void OnSICKFloodOff() { sickFlood = false; }
 void OnSICKChangeOn() { sickChange = true; }
 void OnSICKChangeOff() { sickChange = false; }
 
-void OnGetSICKValue(unsigned char id) { SendSICKValue(id, Buff_adc_value[id]); }
+//void OnGetSICKValue(unsigned char id) { SendSICKValue(id, Buff_adc_value[id]); }
 
 void __attribute__((interrupt,auto_psv)) _T5Interrupt(void) {
     switch(channel){
@@ -56,7 +57,7 @@ void __attribute__ ((interrupt, auto_psv)) _ADC1Interrupt(void)
 {
     short zone = ADC1BUF0 >> 6;
 
-    if (sickFlood || (sickChange && Buff_adc_value[channel] != zone)) SendSICKValue(channel, zone);
+//    if (sickFlood || (sickChange && Buff_adc_value[channel] != zone)) SendSICKValue(channel, zone);
     Buff_adc_value[channel] = zone;
     channel = (channel + 1) % NB_SENSOR;
 
@@ -64,5 +65,4 @@ void __attribute__ ((interrupt, auto_psv)) _ADC1Interrupt(void)
     IFS0bits.AD1IF = 0;        //Clear the interrupt flag
 }
 
-void OnGetBackBumperState() { SendBackBumperState(0); } // TODO
-
+//void OnGetBackBumperState() { SendBackBumperState(0); } // TODO

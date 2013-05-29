@@ -1,4 +1,4 @@
-// Generated from version 1305291511 of semantic
+// Generated from version 1305291610 of semantic
 
 #include "atp.h"
 
@@ -191,7 +191,7 @@ __attribute__((weak)) void OnSpeedFree(float speed) {}
 __attribute__((weak)) void OnSpeedOmega(float speed, float omega, float aDistMax, float dDistMax, float aRotMax, float dRotMax) {}
 
 // You should redefine this function
-__attribute__((weak)) void OnStep(unsigned long int period, unsigned long int ticsG, unsigned long int ticsD, float consignG, float consignD) {}
+__attribute__((weak)) void OnStep(unsigned long int period, unsigned long int ticsG, unsigned long int ticsD, long int consignG, long int consignD) {}
 
 // You should redefine this function
 __attribute__((weak)) void OnStop() {}
@@ -317,7 +317,7 @@ int AtpDecode(int id,
         return 1;
     }
     if (id == 10) {
-        OnStep(uintv[0], uintv[1], uintv[2], floatv[0], floatv[1]);
+        OnStep(uintv[0], uintv[1], uintv[2], intv[0], intv[1]);
         return 1;
     }
     if (id == 1) {

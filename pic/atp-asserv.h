@@ -1,4 +1,4 @@
-// Generated from version 1305291511 of semantic
+// Generated from version 1305291610 of semantic
 
 #ifndef _ASSERV_H_
 #define _ASSERV_H_
@@ -69,7 +69,7 @@ void OnSpeedFree(float speed);
 
 void OnSpeedOmega(float speed, float omega, float aDistMax, float dDistMax, float aRotMax, float dRotMax);
 
-void OnStep(unsigned long int period, unsigned long int ticsG, unsigned long int ticsD, float consignG, float consignD);
+void OnStep(unsigned long int period, unsigned long int ticsG, unsigned long int ticsD, long int consignG, long int consignD);
 
 void OnStop();
 

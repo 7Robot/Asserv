@@ -14,6 +14,7 @@
 
 #include "header.h"  /* Function / Parameters                           */
 #include "asserv/libasserv.h"
+#include "atp-asserv.h"
 
 /******************************************************************************/
 /* Configuartion                                                              */
@@ -40,7 +41,7 @@ int16_t main(void)
     InitApp();
     InitAdc();
     AtpInit();
-    motion_init(24700, 0.29, SendDone);
+//    motion_init(24700, 0.29, SendDone);
 
     SendBoardId();
 
@@ -48,11 +49,12 @@ int16_t main(void)
     while(1) {
         //SendBoardId();
 
-        if (odoBroadcast) {
-            OnGetPos();
-        }
+//        if (odoBroadcast) {
+//            OnGetPos();
+        //}
 
-        __delay_ms(odoDelay);
+        __delay_ms(1000);
+
     }
 }
 

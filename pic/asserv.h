@@ -1,8 +1,6 @@
 #ifndef _ASSERV_ASSERV_H_
 #define _ASSERV_ASSERV_H_
 
-#include "odo.h"
-
 //arbitrairement
 #define TICS_BY_METERD 24950
 //#define TICS_BY_METERG 24500

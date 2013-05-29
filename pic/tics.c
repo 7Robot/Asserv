@@ -10,7 +10,7 @@ void __attribute__((interrupt,auto_psv)) _T2Interrupt(void)
 {
     static int count = 0;
     count++;
-    
+
     // On lit l'encodeur droit (qui est en fait le gauche)
     ticd = (uint16_t) POS1CNT;// ReadQEI2();
     diffd = ticd-old_ticd;
