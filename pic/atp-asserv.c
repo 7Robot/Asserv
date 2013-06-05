@@ -1,4 +1,4 @@
-// Generated from version 1306051505 of semantic
+// Generated from version 1306051506 of semantic
 
 #include "atp.h"
 
