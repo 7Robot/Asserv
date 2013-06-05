@@ -76,3 +76,9 @@ void OnSetX(float x) { pos.x = x; }
 void OnSetY(float y) { pos.y = y; }
 
 void OnSetTheta(float theta) { pos.t = theta; }
+
+void OnSetXTheta(float x, float theta) { pos.x = x; pos.t = theta; }
+
+void OnSetYTheta(float y, float theta) { pos.y = y; pos.t = theta; }
+
+void OnSetXYTheta(float x, float y, float theta) { pos.x = x; pos.y = y; pos.t = theta; }

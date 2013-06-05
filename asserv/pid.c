@@ -58,12 +58,6 @@ float pid_process(volatile Pid *pid, float period, float value) {
     pid->intErr += err * period;
     pid->oldErr = err;
 
-    static int count = 0;
-    if (count == 100) {
-        count = 0;
-        SendPos(err, (pid->coefs).kp, value);
-    } else count++;
-
     return (pid->coefs).kp * err
         + (pid->coefs).ki * pid->intErr
         - (pid->coefs).kd * pid->derivErr;

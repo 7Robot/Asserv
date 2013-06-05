@@ -35,6 +35,9 @@ _FICD(ICS_PGD1 & JTAGEN_OFF);
 /* Main Program                                                               */
 /******************************************************************************/
 
+bool odoBroadcast = true;
+unsigned long int odoDelay = 1000;
+
 int16_t main(void)
 {
     // Initialize IO ports and peripherals.
@@ -43,7 +46,7 @@ int16_t main(void)
     InitAdc();
     AtpInit();
     odo_init(); // TODO
-//    motion_init(24700, 0.29, SendDone);
+    motion_init(SendDone);
 
     SendBoardId();
     __delay_ms(3000);
@@ -53,11 +56,16 @@ int16_t main(void)
     while(1) {
         //SendBoardId();
 
-//        if (odoBroadcast) {
-//            OnGetPos();
-        //}
+        if (odoBroadcast) {
+            OnGetPos();
+        }
 
-        __delay_ms(1000);
+        __delay_ms(odoDelay);
 
     }
 }
+
+void OnOdoBroadcastOn() {odoBroadcast = true;}
+void OnOdoBroadcastOff() {odoBroadcast = false;}
+void OnOdoBroadcastToggle() {odoBroadcast = !odoBroadcast;}
+void OnOdoDelay(unsigned long int delay) {odoDelay = delay;}
