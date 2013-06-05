@@ -15,6 +15,7 @@
 #include "header.h"  /* Function / Parameters                           */
 #include "asserv/libasserv.h"
 #include "atp-asserv.h"
+#include "asserv/libasserv_priv.h"
 
 /******************************************************************************/
 /* Configuartion                                                              */
@@ -41,8 +42,11 @@ int16_t main(void)
     InitApp();
     InitAdc();
     AtpInit();
+    odo_init(); // TODO
 //    motion_init(24700, 0.29, SendDone);
 
+    SendBoardId();
+    __delay_ms(3000);
     SendBoardId();
 
 
@@ -57,4 +61,3 @@ int16_t main(void)
 
     }
 }
-
