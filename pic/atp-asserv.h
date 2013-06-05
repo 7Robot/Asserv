@@ -1,4 +1,4 @@
-// Generated from version 1306051624 of semantic
+// Generated from version 1306051704 of semantic
 
 #ifndef _ASSERV_H_
 #define _ASSERV_H_
@@ -42,6 +42,8 @@ void OnOdoBroadcastOff();
 void OnOdoBroadcastOn();
 
 void OnOdoBroadcastToggle();
+
+void OnOdoDelay(unsigned long int delay);
 
 void OnOmega(float omega, float aMax, float dMax);
 

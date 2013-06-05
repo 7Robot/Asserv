@@ -1,4 +1,4 @@
-// Generated from version 1306051624 of semantic
+// Generated from version 1306051704 of semantic
 
 #include "atp.h"
 
@@ -129,6 +129,9 @@ __attribute__((weak)) void OnOdoBroadcastOn() {}
 
 // You should redefine this function
 __attribute__((weak)) void OnOdoBroadcastToggle() {}
+
+// You should redefine this function
+__attribute__((weak)) void OnOdoDelay(unsigned long int delay) {}
 
 // You should redefine this function
 __attribute__((weak)) void OnOmega(float omega, float aMax, float dMax) {}
@@ -286,6 +289,10 @@ int AtpDecode(int id,
         OnOdoBroadcastToggle();
         return 1;
     }
+    if (id == 46) {
+        OnOdoDelay(uintv[0]);
+        return 1;
+    }
     if (id == 22) {
         OnOmega(floatv[0], floatv[1], floatv[2]);
         return 1;
@@ -330,11 +337,11 @@ int AtpDecode(int id,
         OnSetX(floatv[0]);
         return 1;
     }
-    if (id == 46) {
+    if (id == 47) {
         OnSetXTheta(floatv[0], floatv[1]);
         return 1;
     }
-    if (id == 48) {
+    if (id == 49) {
         OnSetXYTheta(floatv[0], floatv[1], floatv[2]);
         return 1;
     }
@@ -342,7 +349,7 @@ int AtpDecode(int id,
         OnSetY(floatv[0]);
         return 1;
     }
-    if (id == 47) {
+    if (id == 48) {
         OnSetYTheta(floatv[0], floatv[1]);
         return 1;
     }
