@@ -1,4 +1,4 @@
-// Generated from version 1306051506 of semantic
+// Generated from version 1306051624 of semantic
 
 #ifndef _ASSERV_H_
 #define _ASSERV_H_
@@ -37,6 +37,12 @@ void OnGetX();
 
 void OnGetY();
 
+void OnOdoBroadcastOff();
+
+void OnOdoBroadcastOn();
+
+void OnOdoBroadcastToggle();
+
 void OnOmega(float omega, float aMax, float dMax);
 
 void SendPos(float x, float y, float theta);
@@ -61,7 +67,13 @@ void OnSetTicByMeter(unsigned long int tic_by_meter);
 
 void OnSetX(float x);
 
+void OnSetXTheta(float x, float theta);
+
+void OnSetXYTheta(float x, float y, float theta);
+
 void OnSetY(float y);
+
+void OnSetYTheta(float y, float theta);
 
 void OnSpeed(float speed, float aMax, float dMax);
 

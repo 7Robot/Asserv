@@ -1,4 +1,4 @@
-// Generated from version 1306051506 of semantic
+// Generated from version 1306051624 of semantic
 
 #include "atp.h"
 
@@ -122,6 +122,15 @@ __attribute__((weak)) void OnGetX() {}
 __attribute__((weak)) void OnGetY() {}
 
 // You should redefine this function
+__attribute__((weak)) void OnOdoBroadcastOff() {}
+
+// You should redefine this function
+__attribute__((weak)) void OnOdoBroadcastOn() {}
+
+// You should redefine this function
+__attribute__((weak)) void OnOdoBroadcastToggle() {}
+
+// You should redefine this function
 __attribute__((weak)) void OnOmega(float omega, float aMax, float dMax) {}
 
 void SendPos(float x, float y, float theta) {
@@ -179,7 +188,16 @@ __attribute__((weak)) void OnSetTicByMeter(unsigned long int tic_by_meter) {}
 __attribute__((weak)) void OnSetX(float x) {}
 
 // You should redefine this function
+__attribute__((weak)) void OnSetXTheta(float x, float theta) {}
+
+// You should redefine this function
+__attribute__((weak)) void OnSetXYTheta(float x, float y, float theta) {}
+
+// You should redefine this function
 __attribute__((weak)) void OnSetY(float y) {}
+
+// You should redefine this function
+__attribute__((weak)) void OnSetYTheta(float y, float theta) {}
 
 // You should redefine this function
 __attribute__((weak)) void OnSpeed(float speed, float aMax, float dMax) {}
@@ -256,6 +274,18 @@ int AtpDecode(int id,
         OnGetY();
         return 1;
     }
+    if (id == 44) {
+        OnOdoBroadcastOff();
+        return 1;
+    }
+    if (id == 43) {
+        OnOdoBroadcastOn();
+        return 1;
+    }
+    if (id == 45) {
+        OnOdoBroadcastToggle();
+        return 1;
+    }
     if (id == 22) {
         OnOmega(floatv[0], floatv[1], floatv[2]);
         return 1;
@@ -300,8 +330,20 @@ int AtpDecode(int id,
         OnSetX(floatv[0]);
         return 1;
     }
+    if (id == 46) {
+        OnSetXTheta(floatv[0], floatv[1]);
+        return 1;
+    }
+    if (id == 48) {
+        OnSetXYTheta(floatv[0], floatv[1], floatv[2]);
+        return 1;
+    }
     if (id == 34) {
         OnSetY(floatv[0]);
+        return 1;
+    }
+    if (id == 47) {
+        OnSetYTheta(floatv[0], floatv[1]);
         return 1;
     }
     if (id == 20) {
