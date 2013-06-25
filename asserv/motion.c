@@ -234,10 +234,15 @@ void motion_reach_x(float x, float v, float a) {
     motion_dist(dist, v, a);
 }
 
+void OnReachX(float x, float vMax, float aMax) { motion_reach_x(x, vMax, aMax); }
+
+
 void motion_reach_y(float y, float v, float a) {
     float dist = (y - odo_get_y()) / sin(odo_get_theta());
     motion_dist(dist, v, a);
 }
+
+void OnReachY(float y, float vMax, float aMax) { motion_reach_y(y, vMax, aMax); }
 
 void motion_reach_theta(float theta, float v, float a) {
     float rot = theta - odo_get_theta();
@@ -245,6 +250,8 @@ void motion_reach_theta(float theta, float v, float a) {
     while (rot < -PI) rot += 2*PI;
     motion_rot(rot, v, a);
 }
+
+void OnReachTheta(float theta, float vMax, float aMax) { motion_reach_theta(theta, vMax, aMax); }
 
 void motion_speed(float v, float a, float d) {
     aDistMax = (a>0)?a:aDistMaxDefault;
