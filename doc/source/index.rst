@@ -6,10 +6,31 @@
 Welcome to Asserv's documentation!
 ==================================
 
+Ceci constitue la documentation de la bibliothèque d’asservissement de l’équipe
+7Robot, réalisé initialement pour la coupe Eurobot 2013.
+
+Le dépot contient 3 sous-dossiers :
+
+* `doc`: cette documentation, au format ReST pour être généré avec sphinx.
+* `asserv`: la bibliothèque d’asservissement à proprement parlé.
+* `pic`: une implémentation sur dsPIC33f, utilisant également les fonctions
+  d’atp (https://github.com/7Robot-Soft/atp).
+
 Contents:
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
+
+   intro.rst
+   odo.rst
+   pid.rst
+   asserv.rst
+   motion.rst
+   ramp_dist.rst
+   ramp_speed.rst
+   terminologie.rst
+   python.rst
+
 
 
 

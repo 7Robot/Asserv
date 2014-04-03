@@ -53,5 +53,12 @@
 #define DEFAULT_SPACING 0.3
 #endif
 
+#ifndef DEFAULT_LEFT_COEFS
+#define DEFAULT_LEFT_COEFS { 1, 0, 0 }
+#endif
+#ifndef DEFAULT_RIGHT_COEFS
+#define DEFAULT_RIGHT_COEFS { 1, 0, 0 }
+#endif
+
 
 #endif // _LIBASSERV_DEFAULT_H_
