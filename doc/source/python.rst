@@ -8,4 +8,4 @@ Ce wrapper définie un objet python `Asserv` possèdant des méthodes pour régl
 le type d’asservissement désiré, et la bien connu méthode `step` pour calculer
 les consignes d’une itération.
 
-La bibliothèque C est utilisé grâce à `ctypes`.
+La bibliothèque C est appelé en utilisant `ctypes`.
