@@ -19,7 +19,7 @@ Le dépot contient 3 sous-dossiers :
 Contents:
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
 
    intro.rst
    odo.rst

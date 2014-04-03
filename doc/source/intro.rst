@@ -5,27 +5,6 @@ Cette partie contient quelques généralités sur le fonctionnement de
 l’asservissement.
 
 
-Architecture
-------------
-
-La bibliothèque d’asservissement est indépendante de son implémentation sur pic
-(elle est prévu pour être également utilisé dans un simulateur).
-
-Elle est divisé en plusieurs partie, du plus bas au plus au niveau :
-
-* `pid`: implémentation d’un régulateur pid
-* `asserv`: sélection d’un pid en position, pid en vitesse ou arrêt (roue libre)
-* `motion`: gestion des fonctions de déplacement, utilise derrière deux asserv :
-  une en delta et l’autre en alpha.
-
-L’utilisateur n’accède qu’aux fonctions fournises par le module `motion`. C’est
-le module `motion` qui derrière instancie deux `asserv` elles même instanciant
-deux `pid` chacune.
-
-À cela s’ajoute des fonctions de générations de rampe, utilisé par motion, et un
-module d’odométrie calculant la position absolue du robot.
-
-
 Fonctionnement général
 ----------------------
 
@@ -131,3 +110,33 @@ finale nulles, une accélération de 0.2 mètres par seconde et une vitesse maxi
 de 0.3 mètre par seconde. On remarque de nombreuse fluctuation de l’accélération
 dû aux méthodes interne de calcul de celle-ci (cf :doc:`Rampe de distance <ramp_dist>`) mais cela n’a que très
 peu d’influence sur les consignes de positions et ne gène en rien la régulation.
+
+
+Architecture
+------------
+
+La bibliothèque d’asservissement est indépendante de son implémentation sur pic
+(elle est prévu pour être également utilisé dans un simulateur).
+
+Elle est divisé en plusieurs partie, du plus bas au plus au niveau :
+
+* `pid`: implémentation d’un régulateur pid
+* `asserv`: sélection d’un pid en position, pid en vitesse ou arrêt (roue libre)
+* `motion`: gestion des fonctions de déplacement, repose sur l’utilisation de
+  deux asserv : une en delta et l’autre en alpha.
+
+L’utilisateur n’accède qu’aux fonctions fournises par le module `motion`. C’est
+le module `motion` qui derrière instancie deux `asserv` elles même instanciant
+deux `pid` chacune.
+
+À cela s’ajoute des fonctions de générations de rampe, utilisé par `motion`, et
+un module d’odométrie calculant la position absolue du robot.
+
+Les fonctions disponibles pour l’utilisateur sont référencé dans `libasserv.h`.
+Les autres fonctions, lorsque partagé entre plusieurs partie de la bibliothèque,
+sont référencées dans `libasserv_priv.h`.
+Les coefficiants par défaut pour les différents PID sont référencés dans
+`libasserv_default.h`.
+Le fichier `libasserv_robot.h` contient les coefficiants propre au robot. Ce
+header doit être inclus dans `libasserv.h` pour être utilisé au lieu des
+coefficiants par défaut.
