@@ -39,8 +39,12 @@ int main(int argc, char **argv) {
     }
     if (t > tMax) {
         fprintf(stderr, "Timeout\n");
+        return 1;
     }
     if (ret == -1) {
         fprintf(stderr, "Error\n");
+        return 1;
     }
+
+    return 0;
 }
