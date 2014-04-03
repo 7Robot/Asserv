@@ -128,4 +128,6 @@ vitesse. L’asservissement se fait encore en position par un PID.
 Voici un exemple de rampe généré.
 Les paramètres utilisé sont une distance d’un mètre, des vitesses initiale et
 finale nulles, une accélération de 0.2 mètres par seconde et une vitesse maximal
-de 0.3 mètre par seconde.
+de 0.3 mètre par seconde. On remarque de nombreuse fluctuation de l’accélération
+dû aux méthodes interne de calcul de celle-ci (cf :doc:`Rampe de distance <ramp_dist>`) mais cela n’a que très
+peu d’influence sur les consignes de positions et ne gène en rien la régulation.
