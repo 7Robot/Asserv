@@ -54,31 +54,6 @@ void odo_set_tic_by_meter(int tic_by_meter) {
     coefs.tic_by_meter = tic_by_meter;
     coefs.meter_by_tic = 1.0/(float)tic_by_meter;
 }
-
-void OnSetTicByMeter(unsigned long int tic_by_meter) { odo_set_tic_by_meter((int)tic_by_meter); }
-
 void odo_set_spacing(float spacing) {
     coefs.spacing = spacing;
 }
-
-void OnSetSpacing(float spacing) { odo_set_spacing(spacing); }
-
-void OnGetX() { SendX(pos.x); }
-
-void OnGetY() { SendX(pos.y); }
-
-void OnGetTheta() { SendTheta(pos.t); }
-
-void OnGetPos() { SendPos(pos.x, pos.y, pos.t); }
-
-void OnSetX(float x) { pos.x = x; }
-
-void OnSetY(float y) { pos.y = y; }
-
-void OnSetTheta(float theta) { pos.t = theta; }
-
-void OnSetXTheta(float x, float theta) { pos.x = x; pos.t = theta; }
-
-void OnSetYTheta(float y, float theta) { pos.y = y; pos.t = theta; }
-
-void OnSetXYTheta(float x, float y, float theta) { pos.x = x; pos.y = y; pos.t = theta; }

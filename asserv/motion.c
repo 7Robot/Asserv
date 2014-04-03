@@ -126,10 +126,6 @@ void motion_step(float period, int ticsLeft, int ticsRight, int *cmdLeft, int *c
     *cmdRight = (int)(cmdDelta + 2 * cmdAlpha);
 }
 
-/*void OnStep(unsigned long int period, unsigned long int ticsG, unsigned long int ticsD, unsigned long int consignG, unsigned long int consignD) {
-    motion_step(period, ticsG, ticsD, (int)consignG, (int)consignD);
-}*/
-
 void motion_dist(float dist, float v, float a) {
     vDistMax = (v>0)?v:vDistMaxDefault;
     aDistMax = (a>0)?a:aDistMaxDefault;
@@ -148,8 +144,6 @@ void motion_dist(float dist, float v, float a) {
     asserv_set_pos_mode(&alphaAsserv);
 }
 
-void OnDist(float dist, float vMax, float aMax) { motion_dist(dist, vMax, aMax); }
-
 void motion_dist_free(float dist) {
     // delta
     deltaMode = M_MANUAL;
@@ -164,8 +158,6 @@ void motion_dist_free(float dist) {
     alphaOrder.x = 0;
     asserv_set_pos_mode(&alphaAsserv);
 }
-
-void OnDistFree(float dist) { motion_dist_free(dist); }
 
 void motion_rot(float rot, float v, float a) {
     vRotMax = (v>0)?v:vRotMaxDefault;
@@ -185,8 +177,6 @@ void motion_rot(float rot, float v, float a) {
     asserv_set_pos_mode(&alphaAsserv);
 }
 
-void OnRot(float rot, float vMax, float aMax) { motion_rot(rot, vMax, aMax); }
-
 void motion_rot_free(float rot) {
     // delta
     deltaMode = M_MANUAL;
@@ -201,8 +191,6 @@ void motion_rot_free(float rot) {
     alphaOrder.x = rot;
     asserv_set_pos_mode(&alphaAsserv);
 }
-
-void OnRotFree(float rot) { motion_rot_free(rot); }
 
 void motion_dist_rot(float dist, float rot, float vDist, float aDist, float vRot, float aRot) {
     // delta
@@ -225,24 +213,15 @@ void motion_dist_rot(float dist, float rot, float vDist, float aDist, float vRot
     asserv_set_pos_mode(&alphaAsserv);
 }
 
-void OnDistRot(float dist, float rot, float vDistMax, float aDistMax, float vRotMax, float aRotMax) {
-    motion_dist_rot(dist, rot, vDistMax, aDistMax, vRotMax, aRotMax);
-}
-
 void motion_reach_x(float x, float v, float a) {
     float dist = (x - odo_get_x()) / cos(odo_get_theta());
     motion_dist(dist, v, a);
 }
 
-void OnReachX(float x, float vMax, float aMax) { motion_reach_x(x, vMax, aMax); }
-
-
 void motion_reach_y(float y, float v, float a) {
     float dist = (y - odo_get_y()) / sin(odo_get_theta());
     motion_dist(dist, v, a);
 }
-
-void OnReachY(float y, float vMax, float aMax) { motion_reach_y(y, vMax, aMax); }
 
 void motion_reach_theta(float theta, float v, float a) {
     float rot = theta - odo_get_theta();
@@ -250,8 +229,6 @@ void motion_reach_theta(float theta, float v, float a) {
     while (rot < -PI) rot += 2*PI;
     motion_rot(rot, v, a);
 }
-
-void OnReachTheta(float theta, float vMax, float aMax) { motion_reach_theta(theta, vMax, aMax); }
 
 void motion_speed(float v, float a, float d) {
     aDistMax = (a>0)?a:aDistMaxDefault;
@@ -269,8 +246,6 @@ void motion_speed(float v, float a, float d) {
     asserv_set_pos_mode(&alphaAsserv);
 }
 
-void OnSpeed(float speed, float aMax, float dMax) { motion_speed(speed, aMax, dMax); }
-
 void motion_speed_free(float speed) {
     // delta
     deltaMode = M_MANUAL;
@@ -285,8 +260,6 @@ void motion_speed_free(float speed) {
     alphaOrder.x = 0;
     asserv_set_pos_mode(&alphaAsserv);
 }
-
-void OnSpeedFree(float speed) { motion_speed_free(speed); }
 
 void motion_omega(float omega, float a, float d) {
     aRotMax = (a>0)?a:aRotMaxDefault;
@@ -303,8 +276,6 @@ void motion_omega(float omega, float a, float d) {
     alphaFinalOrder.v = omega;
     asserv_set_speed_mode(&alphaAsserv);
 }
-
-void OnOmega(float omega, float aMax, float dMax) { motion_omega(omega, aMax, dMax); }
 
 void motion_omega_free(float omega) {
     // delta
@@ -338,10 +309,6 @@ void motion_speed_omega(float speed, float omega, float aDist, float dDist, floa
     asserv_set_speed_mode(&alphaAsserv);
 }
 
-void OnSpeedOmega(float speed, float omega, float aDistMax, float dDistMax, float aRotMax, float dRotMax) {
-    motion_speed_omega(speed, omega, aDistMax, dDistMax, aRotMax, dRotMax);
-}
-
 //void motion_pause(float aDistMax, float dDistMax) {
 //    consigne.rot = 0;
 //    asserv_set_consigne(&consigne);
@@ -361,15 +328,9 @@ void motion_stop() {
     done();
 }
 
-void OnStop() { motion_stop(); }
-
 void motion_set_epsilons(float Ed, float Es, float Et, float Eo) {
     epsDist = Ed;
     epsSpeed = Es;
     epsTheta = Et;
     epsOmega = Eo;
-}
-
-void OnSetEpsilons(float dist, float speed, float theta, float omega) {
-    motion_set_epsilons(dist, speed, theta, omega);
 }
