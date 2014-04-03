@@ -3,6 +3,7 @@ Terminologie
 
 * `step`: L’asservissement étant discret, les consignes sont recalculé à chaque
   pas appelé `step` dans cette documentation.
+* `period`: Le temps entre deux `step`.
 * `dist`: Abscisse curviligne parcouru par le centre du robot. Il s’agit de la
   moyenne du déplacement des roues droite et gauche.
 * `delta`: Évolution de la distance curviligne entre deux `step` (autrement
