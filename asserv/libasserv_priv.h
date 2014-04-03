@@ -13,7 +13,7 @@
 
 /* odo */
 void odo_init();
-void odo_step(int ticsG, int ticsD, float *dist, float *rot);
+void odo_step(int ticsG, int ticsD, float *delta, float *alpha);
 
 /* pid */
 typedef struct {

@@ -64,15 +64,15 @@ void motion_init(void(*_done)(void)) {
 
 void motion_step(float period, int ticsLeft, int ticsRight, int *cmdLeft, int *cmdRight) {
     int ret;
-    float dist, rot;
+    float delta, alpha;
     float cmdDelta, cmdAlpha;
 
-    odo_step(ticsLeft, ticsRight, &dist, &rot);
+    odo_step(ticsLeft, ticsRight, &delta, &alpha);
 
-    deltaState.x += dist;
-    deltaState.v = dist / period;
-    alphaState.x += rot;
-    alphaState.v = rot / period;
+    deltaState.x += delta;
+    deltaState.v = delta / period;
+    alphaState.x += alpha;
+    alphaState.v = alpha / period;
 
     switch (deltaMode) {
         case M_POS:

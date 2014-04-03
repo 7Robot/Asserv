@@ -32,12 +32,12 @@ void odo_init() {
     odo_set_spacing(DEFAULT_SPACING);
 }
 
-void odo_step(int ticsG, int ticsD, float *dist, float *rot) {
-    *dist = (ticsD + ticsG) * coefs.meter_by_tic / 2.0f;
-    *rot = (ticsD - ticsG) * coefs.meter_by_tic / coefs.spacing;
-    pos.x += *dist * cos(pos.t);
-    pos.y += *dist * sin(pos.t);
-    pos.t += *rot ;
+void odo_step(int ticsG, int ticsD, float *delta, float *alpha) {
+    *delta = (ticsD + ticsG) * coefs.meter_by_tic / 2.0f;
+    *alpha = (ticsD - ticsG) * coefs.meter_by_tic / coefs.spacing;
+    pos.x += *delta * cos(pos.t);
+    pos.y += *delta * sin(pos.t);
+    pos.t += *alpha ;
     if (pos.t > PI) pos.t -= 2*PI;
     if (pos.t <= -PI) pos.t += 2*PI;
 }
