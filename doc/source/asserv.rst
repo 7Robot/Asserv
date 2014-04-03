@@ -33,7 +33,7 @@ définie dans `libasserv_priv.h` contenant la position et la vitesse).
 Suivant le mode, `pid_process` est appelé sur le bon PID, avec en argument
 toujours suivant le mode soit la position actuelle, soit la vitesse actuelle.
 
-Remarque 1 : L’asservissement nécessite deux objets `asserv`.
+Remarque : L’asservissement nécessite deux objets `asserv`.
 L’un en `delta`, l’autre en `alpha`. Ainsi, la strucure `State` contenant la
 position et la vitesse peut désigner soit le couple (`dist`, `delta`), soit le
 couple (`theta`, `alpha`).

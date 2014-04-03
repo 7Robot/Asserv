@@ -13,8 +13,8 @@ Deux structures sont définies dans `odo.c` :
 
 La fonction `odo_step` permet de mettre à jour la position du robot tenant
 compte des `tics` fournis.
-Elle fournit également le déplacement curviligne et la rotation engendré par les
-`tics` fournis.
+Elle fournit également le déplacement curviligne (`delta`) et la rotation
+(`alpha`) engendré par les `tics` fournis.
 
 Remarque : La position angulaire (`theta`) est en radiant et comprise dans
 l’intervalle [-PI;PI[.
