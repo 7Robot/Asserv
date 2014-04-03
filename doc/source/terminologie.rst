@@ -30,3 +30,8 @@ On a donc les égalités suivante :
     \mathrm{speed} = \frac{\mathrm{delta}}{\mathrm{period}}
 
     \mathrm{omega} = \frac{\mathrm{alpha}}{\mathrm{period}}
+
+Attention ! Dès fois `delta` et `alpha`, notamment lorsqu’il constitue le nom
+d’une autre variable, sont juste présent pour faire la différence entre
+l’asservissement rectiligne et l’asservissement de l’orientation, mais ne
+désigne pas nécessairement une distance par `step` ou rotation par `step`.
