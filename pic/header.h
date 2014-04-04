@@ -20,8 +20,9 @@
 #include <uart.h>
 #include <adc.h>
 #include "qei.h"
+#include "libasserv_robot.h"
+#include "asserv/libasser.h"
 #include "atp.h"
-#include "asserv.h"
 #include "atp-asserv.h"
 
 /******************************************************************************/

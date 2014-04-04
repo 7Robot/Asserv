@@ -13,9 +13,6 @@
 */
 
 #include "header.h"  /* Function / Parameters                           */
-#include "asserv/libasserv.h"
-#include "atp-asserv.h"
-#include "asserv/libasserv_priv.h"
 
 /******************************************************************************/
 /* Configuartion                                                              */

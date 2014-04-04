@@ -1,9 +1,6 @@
 #ifndef _LIBASSERV_H_
 #define _LIBASSERV_H_
 
-/* If you want define some default values, do it here */
-//#include "libasserv_robot.h"
-
 /* motion */
 void motion_init(void(*callback_done)(void));
 void motion_step(float period, int ticsG, int ticsD, int *consigneG, int *consigneD);
