@@ -1,10 +1,10 @@
 Terminologie
 ============
 
-* `step`: L’asservissement étant discret, les consignes sont recalculé à chaque
+* `step`: L’asservissement étant discret, les consignes sont recalculées à chaque
   pas appelé `step` dans cette documentation.
 * `period`: Le temps entre deux `step`.
-* `dist`: Abscisse curviligne parcouru par le centre du robot. Il s’agit de la
+* `dist`: Abscisse curviligne parcourue par le centre du robot. Il s’agit de la
   moyenne du déplacement des roues droite et gauche.
 * `delta`: Évolution de la distance curviligne entre deux `step`.
 * `speed`: Vitesse curviligne. Peut-être calculé en fonction de `delta` et de la
@@ -31,7 +31,7 @@ On a donc les égalités suivante :
 
     \mathrm{omega} = \frac{\mathrm{alpha}}{\mathrm{period}}
 
-Attention ! Dès fois `delta` et `alpha`, notamment lorsqu’il constitue le nom
+Attention ! Des fois `delta` et `alpha`, notamment lorsqu’ils constituent le nom
 d’une autre variable, sont juste présent pour faire la différence entre
 l’asservissement rectiligne et l’asservissement de l’orientation, mais ne
-désigne pas nécessairement une distance par `step` ou rotation par `step`.
+désignent pas nécessairement une distance par `step` ou rotation par `step`.

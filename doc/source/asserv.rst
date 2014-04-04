@@ -1,12 +1,12 @@
 Asserv
 ======
 
-Le fichier `asserv.c` contient les fonctions nécessaire pour réaliser un
+Le fichier `asserv.c` contient les fonctions nécessaires pour réaliser un
 asservissement en position ou vitesse.
 
-Ainsi, lors de la création d’un asservissement, deux pid sont initialisé :
+Ainsi, lors de la création d’un asservissement, deux pid sont initialisés :
 un pour l’asservissement en position et l’autre pour l’asservissement en vitesse
-(avec leurs propres coefficiants).
+(avec leurs propres coefficients).
 L’asservissement peut également être désactivé.
 
 Finalement, l’asservissement peut être dans 3 mode différents comme résumé par
@@ -26,7 +26,7 @@ position.
 Le mode peut être changé grâce aux trois fonctions `asserv_off`,
 `asserv_set_pos_mode` et `asserv_set_speed_mode`.
 
-À chaque `step`, la fonction `asserv_step` doit être appelé (ceci est fait par
+À chaque `step`, la fonction `asserv_step` doit être appelée (ceci est fait par
 la fonction `motion_step`). Elle prend en
 argument la période nécessaire au PID et l’état du robot (structure `State`
 définie dans `libasserv_priv.h` contenant la position et la vitesse).
