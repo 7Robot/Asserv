@@ -79,6 +79,11 @@ void motion_step(float period, int ticsLeft, int ticsRight, int *cmdLeft, int *c
             ret = ramp_dist(period,
                     &(deltaOrder.x), &(deltaOrder.v), &(deltaOrder.a),
                     deltaFinalOrder.x, deltaFinalOrder.v, vDistMax, aDistMax);
+            // la vitesse final n’est pas forcément atteinte
+            // il peut être judicieux de continuer lorque la vitesse actuelle
+            // est supérieur à la vitesse final, ceci impliquand un ineductable
+            // dépassement, mais la rampe est capable de faire reculer le robot
+            // pour le positionner correctement, avec la bonne vitesse !
             if (ret) {
                 deltaMode = M_MANUAL;
                 asserv_off(&(deltaAsserv));
