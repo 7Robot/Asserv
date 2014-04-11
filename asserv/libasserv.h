@@ -9,6 +9,7 @@ void motion_set_epsilons(float Ed, float Es, float Et, float Eo);
 
 /* motion order */
 void motion_stop();
+void motion_block();
 void motion_dist(float dist, float vMax, float aMax);
 void motion_rot(float rot, float vMax, float aMax);
 void motion_dist_rot(float dist, float rot, float vDist, float aDist, float vRot, float aRot);

@@ -333,6 +333,22 @@ void motion_stop() {
     done();
 }
 
+
+void motion_block() {
+    // delta
+    deltaMode = M_MANUAL;
+    deltaState.x = 0;
+    deltaState.v = 0;
+    deltaOrder.x = 0;
+    asserv_set_pos_mode(&deltaAsserv);
+    // alpha
+    alphaMode = M_MANUAL;
+    alphaState.x = 0;
+    alphaState.v = 0;
+    alphaOrder.v = 0;
+    asserv_set_speed_mode(&alphaAsserv);
+}
+
 void motion_set_epsilons(float Ed, float Es, float Et, float Eo) {
     epsDist = Ed;
     epsSpeed = Es;
