@@ -1,7 +1,8 @@
 #include <math.h>
 
 #include "libasserv_priv.h"
-#include "../pic/atp-asserv.h"
+#include "../../EUR_2014_asserv.X/libasserv_robot.h"
+#include "libasserv_default.h"
 
 /** TODO
  * Use tics and integer instead of meter and float

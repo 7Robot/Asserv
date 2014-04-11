@@ -2,6 +2,8 @@
 #include <stdio.h>
 
 #include "libasserv_priv.h"
+#include "../../EUR_2014_asserv.X/libasserv_robot.h"
+#include "libasserv_default.h"
 
 #define PI 3.141592653589793
 

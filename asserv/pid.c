@@ -2,7 +2,7 @@
 #include <math.h>
 
 #include "libasserv_priv.h"
-#include "../pic/atp-asserv.h"
+//#include "../pic/atp-asserv.h"
 
 /* TODO:
  * - Intégrer sur une fenêtre bornée
