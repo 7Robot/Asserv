@@ -20,6 +20,7 @@ void motion_reach_y(float y, float vMax, float aMax);
 void motion_reach_theta(float theta, float vMax, float aMax);
 void motion_speed(float speed, float aMax, float dMax);
 void motion_speed_free(float speed);
+void motion_speed_omega(float speed, float omega, float aDist, float dDist, float aRot, float dRot);
 void motion_omega(float omega, float aMax, float dMax);
 void motion_omega_free(float omega);
 
