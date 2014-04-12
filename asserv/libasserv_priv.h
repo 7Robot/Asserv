@@ -4,7 +4,7 @@
 #include <stdbool.h>
 
 #include "libasserv.h"
-//#include "libasserv_default.h"
+#include "libasserv_default.h"
 
 #ifndef NULL
 #define NULL 0

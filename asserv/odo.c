@@ -1,7 +1,6 @@
 #include <math.h>
 
 #include "libasserv_priv.h"
-#include "../../EUR_2014_asserv.X/libasserv_robot.h"
 #include "libasserv_default.h"
 
 /** TODO

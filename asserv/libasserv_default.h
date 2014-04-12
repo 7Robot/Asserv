@@ -1,6 +1,8 @@
 #ifndef _LIBASSERV_DEFAULT_H_
 #define _LIBASSERV_DEFAULT_H_
 
+#include "../../EUR_2014_asserv.X/libasserv_robot.h"
+
 #ifndef DEFAULT_DELTA_POS_COEFS
 #define DEFAULT_DELTA_POS_COEFS { 600, 1, 50 }
 #endif
