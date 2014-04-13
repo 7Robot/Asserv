@@ -32,6 +32,7 @@ void pid_set_kd(volatile Pid *pid, float kd) {
 
 void pid_reset(volatile Pid *pid) {
     pid->first = true;
+    pid->derivErr = 0;
     pid->intErr = 0;
 }
 
@@ -49,7 +50,6 @@ float pid_process(volatile Pid *pid, float period, float value) {
     }
 
     if (pid->first) {
-        pid->derivErr = 0;
         pid->first = false;
     } else {
         pid->derivErr = (pid->oldErr - err) / period;
@@ -65,4 +65,10 @@ float pid_process(volatile Pid *pid, float period, float value) {
 int pid_done(volatile Pid *pid, float epsilonErr, float epsilonDeriv) {
     return (fabsf(pid->oldErr) < epsilonErr
             && fabsf(pid->derivErr) < epsilonDeriv);
+}
+
+void pid_get_errors(volatile Pid *pid, float *err, float *deriv, float *inte) {
+    *err = pid->oldErr;
+    *deriv = pid->derivErr;
+    *inte = pid->intErr;
 }

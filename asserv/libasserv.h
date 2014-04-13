@@ -3,9 +3,13 @@
 
 /* motion */
 void motion_init(void(*callback_done)(void));
-void motion_step(float period, int ticsG, int ticsD, int *consigneG, int *consigneD);
+void motion_step(float period, int ticsG, int ticsD,
+        int *consigneG, int *consigneD);
 void motion_set_epsilons(float Ed, float Es, float Et, float Eo);
-//void motion_pause(float aMax, float dMax);
+void motion_get_errors(float *deltaErr, float *deltaDeriv, float *deltaInte,
+        float *alphaErr, float *alphaDeriv, float *alphaInte);
+void motion_get_orders(float *deltaOrder, float *alphaOrder,
+        int *leftOrder, int *rightOrder);
 
 /* motion order */
 void motion_stop();

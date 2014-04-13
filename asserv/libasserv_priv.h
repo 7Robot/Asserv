@@ -37,6 +37,7 @@ void pid_set_coefs(volatile Pid *pid, PidCoefs coefs);
 void pid_set_kp(volatile Pid *pid, float kp);
 void pid_set_ki(volatile Pid *pid, float ki);
 void pid_set_kd(volatile Pid *pid, float kd);
+void pid_get_errors(volatile Pid *pid, float *err, float *deriv, float *inte);
 
 /* asserv */
 typedef struct {
@@ -60,12 +61,15 @@ typedef struct {
     float epsSpeedErr;
     float epsSpeedDerv;
 } Asserv;
-void asserv_init(volatile Asserv *asserv, PidCoefs posCoefs, PidCoefs speedCoefs, volatile Order *order);
+void asserv_init(volatile Asserv *asserv,
+        PidCoefs posCoefs, PidCoefs speedCoefs, volatile Order *order);
 float asserv_step(volatile Asserv *asserv, float period, State state);
 int asserv_done(volatile Asserv *asserv, float epsilonErr, float epsilonDeriv);
 void asserv_off(volatile Asserv *asserv);
 void asserv_set_pos_mode(volatile Asserv *asserv);
 void asserv_set_speed_mode(volatile Asserv *asserv);
+void asserv_get_errors(volatile Asserv *asserv,
+        float *err, float *deriv, float *inte);
 
 /* ramp */
 int ramp_dist(float period,

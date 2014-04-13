@@ -44,3 +44,16 @@ float asserv_step(volatile Asserv *asserv, float period, State state) {
 int asserv_done(volatile Asserv *asserv, float epsErr, float epsDeriv) {
     return pid_done(&(asserv->posPid), epsErr, epsDeriv);;
 }
+
+void asserv_get_errors(volatile Asserv *asserv,
+        float *err, float *deriv, float *inte) {
+    if (asserv->mode == M_POS) {
+        pid_get_errors(&(asserv->posPid), err, deriv, inte);
+    } else if (asserv->mode == M_SPEED) {
+        pid_get_errors(&(asserv->speedPid), err, deriv, inte);
+    } else {
+        *err = 0;
+        *deriv = 0;
+        *inte = 0;
+    }
+}
