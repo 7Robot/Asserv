@@ -68,7 +68,7 @@ void motion_init(void(*_done)(void)) {
 int lastDeltaMode = -1;
 int lastAlphaMode = -1;
 
-static float cmdDelta, cmdAlpha;
+static volatile float cmdDelta, cmdAlpha;
 
 void motion_step(float period, int ticsLeft, int ticsRight, int *cmdLeft, int *cmdRight) {
     int ret;
