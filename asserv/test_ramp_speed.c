@@ -41,4 +41,5 @@ int main(int argc, char **argv) {
     if (t > tMax) {
         fprintf(stderr, "Timeout\n");
     }
+    return 0;
 }
