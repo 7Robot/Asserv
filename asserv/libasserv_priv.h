@@ -44,11 +44,15 @@ typedef struct {
     float x; // position
     float v; // vitesse
 } State;
+void state_reset(volatile State *state);
+
 typedef struct {
     float x; // position
     float v; // vitesse
     float a; // accélération
 } Order;
+void order_reset(volatile Order *order);
+
 typedef struct {
     int mode;
     volatile Order *order;
