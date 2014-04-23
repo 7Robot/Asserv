@@ -13,15 +13,21 @@
 #define M_POS       3 // rampe de position
 #define M_SPEED     4 // rampe de vitesse
 
+// XXX debug
+#define sendorders SendMotionOrders(deltaOrder.x, deltaOrder.v, deltaOrder.a, alphaOrder.x, alphaOrder.v, alphaOrder.a)
+
 // état des systèmes (position, vitesse)
+// utilisé par les pid pour connaître l’erreur
+// seul la position ou la vitesse ne sert, suivant le type d’asserv
 static volatile State deltaState;
 static volatile State alphaState;
 
-// commandes actuelles
+// commandes calculé à chaque itération par les rampes,
+// fixé au début de la consigne si pas de rampe
 static volatile Order deltaOrder;
 static volatile Order alphaOrder;
 
-// consignes finales
+// consignes finales, seulement pour utilisation avec les rampes
 static volatile Order deltaFinalOrder;
 static volatile Order alphaFinalOrder;
 
@@ -29,7 +35,7 @@ static volatile Order alphaFinalOrder;
 static volatile Asserv deltaAsserv;
 static volatile Asserv alphaAsserv;
 
-// génération des rampes
+// mode de génération des rampes (ou pas)
 static volatile int deltaMode = M_OFF;
 static volatile int alphaMode = M_OFF;
 
@@ -39,7 +45,7 @@ static volatile float epsSpeed = DEFAULT_EPSILON_SPEED;
 static volatile float epsTheta = DEFAULT_EPSILON_THETA;
 static volatile float epsOmega = DEFAULT_EPSILON_OMEGA;
 
-// accélération, décélération et vitesse maximum
+// vitesse, accélération et décélération et maximum
 static volatile float vDistMax, aDistMax, dDistMax;
 static volatile float vRotMax, aRotMax, dRotMax;
 static volatile float vDistMaxDefault = DEFAULT_DIST_SPEED_MAX;
@@ -62,10 +68,11 @@ void motion_init(void(*_done)(void)) {
             (PidCoefs)DEFAULT_ALPHA_POS_COEFS,
             (PidCoefs)DEFAULT_ALPHA_SPEED_COEFS,
             &alphaOrder);
-    state_reset(&deltaState);
-    state_reset(&alphaState);
+    deltaOrder.v = 0;
+    alphaOrder.v = 0;
 }
 
+// XXX debug
 int lastDeltaMode = -1;
 int lastAlphaMode = -1;
 
@@ -99,6 +106,7 @@ void motion_step(float period, int ticsLeft, int ticsRight, int *cmdLeft, int *c
             // est supérieur à la vitesse final, ceci impliquand un ineductable
             // dépassement, mais la rampe est capable de faire reculer le robot
             // pour le positionner correctement, avec la bonne vitesse !
+            // bref, à améliorer éventuellement.
             if (ret) {
                 deltaMode = M_END;
                 if (alphaMode == M_FIX) {
@@ -118,6 +126,7 @@ void motion_step(float period, int ticsLeft, int ticsRight, int *cmdLeft, int *c
             ret = ramp_dist(period,
                     &(alphaOrder.x), &(alphaOrder.v), &(alphaOrder.a),
                     alphaFinalOrder.x, alphaFinalOrder.v, vRotMax, aRotMax);
+            // même remarque
             if (ret) {
                 alphaMode = M_END;
                 if (deltaMode == M_FIX) {
@@ -142,6 +151,7 @@ void motion_step(float period, int ticsLeft, int ticsRight, int *cmdLeft, int *c
             asserv_off(&(deltaAsserv));
             if (alphaMode == M_FIX) alphaMode = M_END;
             else if (alphaMode == M_OFF) {
+                sendorders;
                 done();
             }
         }
@@ -152,6 +162,7 @@ void motion_step(float period, int ticsLeft, int ticsRight, int *cmdLeft, int *c
             asserv_off(&(alphaAsserv));
             if (deltaMode == M_FIX) deltaMode = M_END;
             else if (deltaMode == M_OFF) {
+                sendorders;
                 done();
             }
         }
@@ -162,9 +173,9 @@ void motion_step(float period, int ticsLeft, int ticsRight, int *cmdLeft, int *c
 }
 
 void motion_dist(float dist, float v, float a) {
+    // delta
     vDistMax = (v>0)?v:vDistMaxDefault;
     aDistMax = (a>0)?a:aDistMaxDefault;
-    // delta
     deltaMode = M_POS;
     deltaState.x = 0;
     deltaOrder.x = 0;
@@ -173,33 +184,37 @@ void motion_dist(float dist, float v, float a) {
     asserv_set_pos_mode(&deltaAsserv);
     // alpha
     alphaMode = M_FIX;
-    state_reset(&alphaState);
+    alphaState.x = 0;
     alphaOrder.x = 0;
+    alphaOrder.v = 0;
     asserv_set_pos_mode(&alphaAsserv);
 }
 
 void motion_dist_free(float dist) {
     // delta
     deltaMode = M_END;
-    state_reset(&deltaState);
+    deltaState.x = 0;
     deltaOrder.x = dist;
+    deltaOrder.v = 0;
     asserv_set_pos_mode(&deltaAsserv);
     // alpha
     alphaMode = M_FIX;
-    state_reset(&alphaState);
+    alphaState.x = 0;
     alphaOrder.x = 0;
+    alphaOrder.v = 0;
     asserv_set_pos_mode(&alphaAsserv);
 }
 
 void motion_rot(float rot, float v, float a) {
-    vRotMax = (v>0)?v:vRotMaxDefault;
-    aRotMax = (a>0)?a:aRotMaxDefault;
     // delta
     deltaMode = M_FIX;
-    state_reset(&deltaState);
+    deltaState.x = 0;
     deltaOrder.x = 0;
+    deltaOrder.v = 0;
     asserv_set_pos_mode(&deltaAsserv);
     // alpha
+    vRotMax = (v>0)?v:vRotMaxDefault;
+    aRotMax = (a>0)?a:aRotMaxDefault;
     alphaMode = M_POS;
     alphaState.x = 0;
     alphaOrder.x = 0;
@@ -212,14 +227,14 @@ void motion_rot_free(float rot) {
     // delta
     deltaMode = M_FIX;
     deltaState.x = 0;
-    deltaState.v = 0;
     deltaOrder.x = 0;
+    deltaOrder.v = 0;
     asserv_set_pos_mode(&deltaAsserv);
     // alpha
     alphaMode = M_END;
     alphaState.x = 0;
-    alphaState.v = 0;
     alphaOrder.x = rot;
+    alphaOrder.v = 0;
     asserv_set_pos_mode(&alphaAsserv);
 }
 
@@ -245,46 +260,45 @@ void motion_dist_rot(float dist, float rot, float vDist, float aDist, float vRot
 }
 
 void motion_speed(float v, float a, float d) {
+    // delta
     aDistMax = (a>0)?a:aDistMaxDefault;
     dDistMax = (d>0)?d:dDistMaxDefault;
     vDistMax = (v<0)?-v:v;
-    // delta
     deltaMode = M_SPEED;
     deltaFinalOrder.v = v;
     asserv_set_speed_mode(&deltaAsserv);
     // alpha
     alphaMode = M_FIX;
     alphaState.x = 0;
-    alphaState.v = 0;
     alphaOrder.x = 0;
+    alphaOrder.v = 0;
     asserv_set_pos_mode(&alphaAsserv);
 }
 
 void motion_speed_free(float speed) {
     // delta
     deltaMode = M_FIX;
-    deltaState.x = 0;
-    deltaState.v = 0;
     deltaOrder.v = speed;
     asserv_set_speed_mode(&deltaAsserv);
     // alpha
     alphaMode = M_FIX;
     alphaState.x = 0;
-    alphaState.v = 0;
     alphaOrder.x = 0;
+    alphaOrder.v = 0;
     asserv_set_pos_mode(&alphaAsserv);
 }
 
 void motion_omega(float omega, float a, float d) {
+    // delta
+    deltaMode = M_FIX;
+    deltaState.x = 0;
+    deltaOrder.x = 0;
+    deltaOrder.v = 0;
+    asserv_set_pos_mode(&deltaAsserv);
+    // alpha
     aRotMax = (a>0)?a:aRotMaxDefault;
     dRotMax = (d>0)?d:dRotMaxDefault;
     vRotMax = (omega<0)?-omega:omega;
-    // delta
-    deltaMode = M_FIX;
-    state_reset(&deltaState);
-    deltaOrder.x = 0;
-    asserv_set_pos_mode(&deltaAsserv);
-    // alpha
     alphaMode = M_SPEED;
     alphaFinalOrder.v = omega;
     asserv_set_speed_mode(&alphaAsserv);
@@ -293,12 +307,12 @@ void motion_omega(float omega, float a, float d) {
 void motion_omega_free(float omega) {
     // delta
     deltaMode = M_FIX;
-    state_reset(&deltaState);
+    deltaState.x = 0;
     deltaOrder.x = 0;
+    deltaOrder.v = 0;
     asserv_set_pos_mode(&deltaAsserv);
     // alpha
     alphaMode = M_FIX;
-    state_reset(&alphaState);
     alphaOrder.v = omega;
     asserv_set_speed_mode(&alphaAsserv);
 }
@@ -322,10 +336,10 @@ void motion_speed_omega(float speed, float omega, float aDist, float dDist, floa
 
 void motion_stop() {
     deltaMode = M_OFF;
-    state_reset(&deltaState);
+    deltaOrder.v = 0;
     asserv_off(&deltaAsserv);
     alphaMode = M_OFF;
-    state_reset(&alphaState);
+    alphaOrder.v = 0;
     asserv_off(&alphaAsserv);
     done();
 }
@@ -333,13 +347,15 @@ void motion_stop() {
 void motion_block() {
     // delta
     deltaMode = M_FIX;
-    state_reset(&deltaState);
+    deltaState.x = 0;
     deltaOrder.x = 0;
+    deltaOrder.v = 0;
     asserv_set_pos_mode(&deltaAsserv);
     // alpha
     alphaMode = M_FIX;
-    state_reset(&alphaState);
+    alphaState.x = 0;
     alphaOrder.x = 0;
+    alphaOrder.v = 0;
     asserv_set_pos_mode(&alphaAsserv);
 }
 
@@ -379,16 +395,4 @@ void motion_get_orders(float *deltaOrder, float *alphaOrder,
     *alphaOrder = cmdAlpha;
     *leftOrder = (int)(cmdDelta - 2 * cmdAlpha);
     *rightOrder = (int)(cmdDelta + 2 * cmdAlpha);
-}
-
-
-void state_reset(volatile State *state) {
-    state->x = 0;
-    state->v = 0;
-}
-
-void order_reset(volatile Order *order) {
-    order->x = 0;
-    order->v = 0;
-    order->a = 0;
 }
