@@ -361,19 +361,19 @@ void motion_block() {
 
 void motion_reach_x(float x, float v, float a) {
     float dist = (x - odo_get_x()) / cos(odo_get_theta());
-    motion_dist(dist, v, a);
+    motion_dist_rot(dist, 0, v, a, vRotMaxDefault, aRotMaxDefault);
 }
 
 void motion_reach_y(float y, float v, float a) {
     float dist = (y - odo_get_y()) / sin(odo_get_theta());
-    motion_dist(dist, v, a);
+    motion_dist_rot(dist, 0, v, a, vRotMaxDefault, aRotMaxDefault);
 }
 
 void motion_reach_theta(float theta, float v, float a) {
     float rot = theta - odo_get_theta();
     while (rot > PI) rot -= 2*PI;
     while (rot < -PI) rot += 2*PI;
-    motion_rot(rot, v, a);
+    motion_dist_rot(0, rot, vDistMaxDefault, aDistMaxDefault, v, a);
 }
 
 void motion_set_epsilons(float Ed, float Es, float Et, float Eo) {
