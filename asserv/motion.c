@@ -108,9 +108,13 @@ void motion_step(float period, int ticsLeft, int ticsRight, int *cmdLeft, int *c
             // pour le positionner correctement, avec la bonne vitesse !
             // bref, à améliorer éventuellement.
             if (ret) {
-                deltaMode = M_END;
-                if (alphaMode == M_FIX) {
-                    alphaMode = M_END;
+                if (alphaMode == M_POS || alphaMode == M_SPEED) {
+                    deltaMode = M_FIX;
+                } else {
+		    deltaMode = M_END;
+                    if (alphaMode == M_FIX) {
+                        alphaMode = M_END;
+                    }
                 }
             }
             break;
@@ -128,9 +132,13 @@ void motion_step(float period, int ticsLeft, int ticsRight, int *cmdLeft, int *c
                     alphaFinalOrder.x, alphaFinalOrder.v, vRotMax, aRotMax);
             // même remarque
             if (ret) {
-                alphaMode = M_END;
-                if (deltaMode == M_FIX) {
-                    deltaMode = M_END;
+                if (deltaMode == M_POS || deltaMode == M_SPEED) {
+                    alphaMode = M_FIX;
+                } else {
+                    alphaMode = M_END;
+                    if (deltaMode == M_FIX) {
+                        deltaMode = M_END;
+                    }
                 }
             }
             break;
